@@ -1,0 +1,24 @@
+{% extends "users/basic.html" %} {% block content %}
+
+<div class="container mt-5">
+  <h2>Admin Analytics Dashboard</h2>
+
+  <p><strong>Total Bookings:</strong> {{ total_bookings }}</p>
+  <p><strong>Total Revenue:</strong>₹{{ total_revenue }}</p>
+
+  <h4>Most Popular Movies</h4>
+  <ul>
+    {% for movie in popular_movies %}
+    <li>{{ movie.name }} ({{ movie.bookings }} bookings)</li>
+    {% endfor %}
+  </ul>
+
+  <h4>Busiest Theaters</h4>
+  <ul>
+    {% for theater in busy_theaters %}
+    <li>{{ theater.name }} ({{ theater.bookings }} bookings)</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

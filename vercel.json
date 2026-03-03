@@ -1,0 +1,19 @@
+{
+  "builds": [
+    {
+      "src": "bookmyseat/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.9",
+        "maxLambdaSize": "15mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "bookmyseat/wsgi.py"
+    }
+  ],
+  "buildCommand": "python manage.py collectstatic --noinput"
+}

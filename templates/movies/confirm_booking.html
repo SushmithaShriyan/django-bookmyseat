@@ -1,0 +1,27 @@
+{% extends "users/basic.html" %} {% block content %}
+
+<div class="container mt-5">
+  <h3>Confirm Your Booking</h3>
+
+  <div class="card p-3 mb-3">
+    <h5>{{ theater.movie.name }}</h5>
+    <p>{{ theater.name }} | {{ theater.time }}</p>
+
+<strong>Seats:</strong>
+{% for seat in seats %}
+  {{ seat.seat_number }}{% if not forloop.last %}, {% endif %}
+{% endfor %}
+
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-lg">
+      Proceed to Payment
+    </button>
+  </form>
+
+  <p class="text-muted mt-3">⏱ Seats are reserved for 5 minutes only.</p>
+</div>
+
+{% endblock %}

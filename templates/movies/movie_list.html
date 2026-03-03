@@ -1,0 +1,89 @@
+{% extends "users/basic.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">Movies</h1>
+
+    <!-- FILTER FORM -->
+    <form method="GET" action="{% url 'movie_list' %}" class="mb-5">
+        <div class="row g-2 align-items-end">
+
+            <!-- Search -->
+            <div class="col-md-4">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control form-control-lg"
+                    placeholder="Search movies"
+                    value="{{ request.GET.search|default_if_none:'' }}"
+                />
+            </div>
+
+            <!-- Genre -->
+            <div class="col-md-3">
+                <select name="genre" class="form-control form-control-lg">
+                    <option value="">All Genres</option>
+                    <option value="Action" {% if request.GET.genre == "Action" %}selected{% endif %}>Action</option>
+                    <option value="Comedy" {% if request.GET.genre == "Comedy" %}selected{% endif %}>Comedy</option>
+                    <option value="Drama" {% if request.GET.genre == "Drama" %}selected{% endif %}>Drama</option>
+                    <option value="Thriller" {% if request.GET.genre == "Thriller" %}selected{% endif %}>Thriller</option>
+                    <option value="Romance" {% if request.GET.genre == "Romance" %}selected{% endif %}>Romance</option>
+                    <option value="Fantasy" {% if request.GET.genre == "Fantasy" %}selected{% endif %}>Fantasy</option>
+                </select>
+            </div>
+
+            <!-- Language -->
+            <div class="col-md-3">
+                <select name="language" class="form-control form-control-lg">
+                    <option value="">All Languages</option>
+                    <option value="English" {% if request.GET.language == "English" %}selected{% endif %}>English</option>
+                    <option value="Hindi" {% if request.GET.language == "Hindi" %}selected{% endif %}>Hindi</option>
+                    <option value="Kannada" {% if request.GET.language == "Kannada" %}selected{% endif %}>Kannada</option>
+                    <option value="Tamil" {% if request.GET.language == "Tamil" %}selected{% endif %}>Tamil</option>
+                    <option value="Telugu" {% if request.GET.language == "Telugu" %}selected{% endif %}>Telugu</option>
+                    <option value="Malyalam" {% if request.GET.language == "Malyalam" %}selected{% endif %}>Malyalam</option>
+                </select>
+            </div>
+
+            <!-- Button -->
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    Filter
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- MOVIE LIST -->
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ movie.image.url }}" class="card-img-top" style="height:300px;object-fit:cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.name }}</h5>
+                    <p>
+                        <i class="fas fa-star text-warning"></i> {{ movie.rating }}
+                    </p>
+                    <p class="text-muted">
+                        <strong>Genre:</strong> {{ movie.genre }} <br>
+                        <strong>Language:</strong> {{ movie.language }}
+                    </p>
+                    <p class="small">Cast: {{ movie.cast }}</p>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{% url 'movie_detail' movie.id %}" class="btn btn-outline-primary w-100">
+                        View Details
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="lead">No movies found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
